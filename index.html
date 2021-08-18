@@ -1,0 +1,34 @@
+<html>
+
+<head>
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+</head>
+
+<body>
+  <h3>WebSocket Go</h3>
+  <pre id="output"></pre>
+
+  <script>
+    url = 'ws://localhost:8000/ws';
+    ws = new WebSocket(url);
+
+    send = function (data) {
+      $("#output").append((new Date()) + " ==> " + data + "\n")
+      ws.send(data)
+    }
+
+    ws.onmessage = function (msg) {
+      $("#output").append((new Date()) + " <== " + msg.data + "\n")
+      console.log(msg)
+    }
+
+    ws.onopen = function () {
+      setInterval(
+        function () { send("ping") }
+        , 1000)
+    }
+  </script>
+
+</body>
+
+</html>
