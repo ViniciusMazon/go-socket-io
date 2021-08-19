@@ -25,6 +25,9 @@ func wshandler(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			break
 		}
+
+		fmt.Print(string(msg))
+		msg = []byte("Retornando uma menssagem")
 		conn.WriteMessage(t, msg)
 	}
 }

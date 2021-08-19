@@ -1,31 +1,36 @@
 <html>
 
 <head>
-  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+
 </head>
 
 <body>
   <h3>WebSocket Go</h3>
   <pre id="output"></pre>
 
+  <button id="trigger">Send</button>
+
   <script>
     url = 'ws://localhost:8000/ws';
     ws = new WebSocket(url);
 
+    var trigger = document.querySelector("#trigger");
+    trigger.addEventListener("click", function () {
+      send();
+    })
+
     send = function (data) {
-      $("#output").append((new Date()) + " ==> " + data + "\n")
+      var data = "Enviando uma mensagem"
       ws.send(data)
+      console.log("send")
     }
 
     ws.onmessage = function (msg) {
-      $("#output").append((new Date()) + " <== " + msg.data + "\n")
-      console.log(msg)
+      console.log("msg: ", msg.data)
     }
 
     ws.onopen = function () {
-      setInterval(
-        function () { send("ping") }
-        , 1000)
+      console.log("Connected")
     }
   </script>
 
